@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import {useState} from 'react';
 import { FaSearch } from 'react-icons/fa';
 //import { useDebounce } from '../useDebounce';
 
@@ -28,11 +28,7 @@ export const SearchBar = () => {
       })
   }
 
-  const optimizedFn = useCallback(debounce(handleChange), []);
-
-  // const handleChange = (value) => {
-  //   fetchData(value);
-  // }
+  const optimizedFn = debounce(handleChange);
 
   return (
     <div className='input-wrapper'>
@@ -45,12 +41,11 @@ export const SearchBar = () => {
         />
       {suggestions.length > 0 && (
         <div className="autocomplete">
-          {suggestions}
-          {/* {suggestions.map((el, i) => (
+          {suggestions.map((el, i) => (
             <div key={i} className="autocompleteItems">
               <span>{el.name}</span>
             </div>
-          ))} */}
+          ))}
         </div>
       )}
     </div>

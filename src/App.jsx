@@ -1,14 +1,12 @@
-// import { useState } from 'react'
 import './App.css'
-import { SearchBar } from "./components/SearchBar";
+import SearchKeyboard from './components/SearchKeyboard'
 
 function App() {
 
   return (
     <>
       <div className='search-container'>
-        <SearchBar />
-        {/* <div>SearchResults</div> */}
+        <SearchKeyboard />
       </div>
     </>
   )

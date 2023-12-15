@@ -1,34 +1,25 @@
-import React, { useCallback, useState } from "react";
+//via https://plainenglish.io/blog/implementing-debouncing-in-react
 
-export const DebounceSrcatch = () => {
+import { useState } from "react";
+//import { useDebounce } from "../useDebounce";
+
+const DebounceScratch = () => {
   const [suggestions, setSuggestions] = useState("");
 
-  const debounce = (func) => {
-    let timer;
-    return function (...args) {
-      const context = this;
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        timer = null;
-        func.apply(context, args);
-      }, 500);
-    };
-  };
-
-  const handleChange = (value) => {
+  const optimizedFn = (value) => {
     fetch(`https://demo.dataverse.org/api/search?q=${value}`)
       .then((res) => res.json())
       .then((json) => setSuggestions(json.data.items));
   };
 
-  const optimizedFn = useCallback(debounce(handleChange), []);
+  //const optimizedFn = useDebounce(handleChange);
 
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>Debouncing in React JS</h2>
-
+      <label htmlFor="search">Search</label>
       <input
-        type="text"
+        type="search"
+        id="search"
         className="search"
         placeholder="Enter something here..."
         onChange={(e) => optimizedFn(e.target.value)}
@@ -36,15 +27,17 @@ export const DebounceSrcatch = () => {
 
       {suggestions.length > 0 && (
         <div className="autocomplete">
-          {suggestions.map((el, i) => (
-            <div key={i} className="autocompleteItems">
-              <span>{el.name}</span>
+          {suggestions.map((suggestion, index) => {
+          return (
+            <div key={index}>
+              <p>{suggestion.name}</p>
             </div>
-          ))}
+          );
+        })}
         </div>
       )}
     </>
   );
 };
 
-export default DebounceSrcatch;
+export default DebounceScratch;
