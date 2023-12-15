@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import './SearchKeyboard.css'
-//import useDebounce from '../hooks/useDebounce'
+import useDebounce from '../hooks/useDebounce';
 
 const SearchKeyboard = () => {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [selectedItem, setSelectedItem] = useState(-1);
-  //const [loading, setLoading] = useState(false);
+  const debouncedSearch = useDebounce(search);
 
   const handleChange = (e) => { 
     setSearch(e.target.value);
@@ -32,18 +32,15 @@ const SearchKeyboard = () => {
     }
   }
 
-  //useDebounce(handleChange, 500);
-
   useEffect(() => {
-    if (search !== ""){
-      fetch(`http://api.tvmaze.com/search/shows?q=${search}`)
+    if (debouncedSearch !== ""){
+      fetch(`http://api.tvmaze.com/search/shows?q=${debouncedSearch}`)
         .then((res) => res.json())
         .then((data) => setSearchData(data));
     } else {
       setSearchData([]);
-      //setLoading(false);
     }
-  }, [search]);
+  }, [debouncedSearch]);
 
   return (
     <div>
@@ -71,7 +68,6 @@ const SearchKeyboard = () => {
             </a>
           )
         })}
-        
       </div>
     </div>
   )
