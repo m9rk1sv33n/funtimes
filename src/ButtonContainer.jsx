@@ -1,10 +1,3 @@
-import CountButton from "./CountButton";
-
-export default function ButtonContainer({ locked, setCount }) {
-  return (
-    <div className="button-container">
-      <CountButton locked={locked} type="minus" setCount={setCount} />
-      <CountButton locked={locked} type="plus" setCount={setCount} />
-    </div>
-  );
+export default function ButtonContainer({ children }) {
+  return <div className="button-container">{children}</div>;
 }
