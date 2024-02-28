@@ -1,5 +1,3 @@
-import React from "react";
-
-export default function Count() {
-  return <p>0</p>;
+export default function Count({ number }) {
+  return <p className="count">{number}</p>;
 }
